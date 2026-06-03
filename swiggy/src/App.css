@@ -1,38 +1,226 @@
-.App {
-  text-align: center;
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  color: #1f2937;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.hero-banner {
+  display: grid;
+  gap: 20px;
+  padding: 28px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ff7a18 0%, #ffb03b 100%);
+  color: #111827;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.brand {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-mark {
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.85);
+  font-size: 28px;
+  font-weight: 700;
+  color: #d9460f;
+}
+
+.hero-banner h1 {
+  margin: 0 0 8px;
+  font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.hero-banner p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+}
+
+.search-box input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.search-icon {
+  font-size: 1.15rem;
+}
+
+.section {
+  margin-top: 32px;
+}
+
+.section h2 {
+  margin: 0 0 10px;
+  font-size: 1.55rem;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.category-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #f5b35a;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: #fff7ed;
+  color: #92400e;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.18);
+}
+
+.category-emoji {
+  font-size: 1.2rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-header p {
+  margin: 4px 0 0;
+  color: #555;
+}
+
+.view-all {
+  border: none;
+  background: #1f2937;
   color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.restaurant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.restaurant-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
+}
+
+.restaurant-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.restaurant-card-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.restaurant-card-header p {
+  margin: 8px 0 0;
+  color: #6b7280;
+}
+
+.rating-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #b45309;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.restaurant-meta {
+  display: flex;
+  gap: 14px;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.restaurant-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.9rem;
+}
+
+.menu-preview {
+  display: grid;
+  gap: 10px;
+}
+
+.dish-row {
+  display: flex;
+  justify-content: space-between;
+  color: #374151;
+}
+
+.order-button {
+  margin-top: auto;
+  border: none;
+  background: #f97316;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.order-button:hover {
+  background: #ea580c;
+}
+
+@media (max-width: 640px) {
+  .hero-banner {
+    padding: 20px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .app-shell {
+    padding: 16px;
   }
 }
