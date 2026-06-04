@@ -20,7 +20,7 @@ const restaurants = [
     dishes: [
       { name: 'Butter Chicken', price: '₹320' },
       { name: 'Hyderabadi Biryani', price: '₹260' },
-      { name: 'Paneer Tikka', price: '₹220' },
+      { name: 'Paneer Tikka', price: '₹220' },  
     ],
   },
   {
@@ -39,7 +39,7 @@ const restaurants = [
   },
   {
     id: 3,
-    name: 'China Wok',
+    name: 'Japan Wok',
     cuisine: 'Chinese, Noodles',
     rating: 4.5,
     eta: '22 mins',
@@ -102,7 +102,7 @@ function App() {
             <h2>Featured Restaurants</h2>
             <p>Handpicked restaurants for you.</p>
           </div>
-          <button className="view-all">View All</button>
+          <button className="view-all">View All Items</button>
         </div>
 
         <div className="restaurant-grid">
