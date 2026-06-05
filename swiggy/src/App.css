@@ -30,7 +30,7 @@
   background: rgba(255,255,255,0.85);
   font-size: 28px;
   font-weight: 700;
-  color: #1e40af;
+  color: #ff9500;
 }
 
 .hero-banner h1 {
@@ -64,6 +64,7 @@
 
 .search-icon {
   font-size: 1.15rem;
+  filter: brightness(0) saturate(100%) invert(55%) sepia(97%) saturate(1500%) hue-rotate(0deg) brightness(105%) contrast(103%);
 }
 
 .section {
