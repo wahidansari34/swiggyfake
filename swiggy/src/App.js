@@ -1,3 +1,4 @@
+import React, { useMemo, useState } from 'react';
 import './App.css';
 
 const categories = [
@@ -20,7 +21,7 @@ const restaurants = [
     dishes: [
       { name: 'Butter Chicken', price: '₹320' },
       { name: 'Hyderabadi Biryani', price: '₹260' },
-      { name: 'Paneer Tikka', price: '₹220' },  
+      { name: 'Paneer Tikka', price: '₹220' },
     ],
   },
   {
@@ -68,6 +69,54 @@ const restaurants = [
 ];
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [cartItems, setCartItems] = useState([]);
+
+  const filteredRestaurants = useMemo(() => {
+    const normalizedSearch = searchQuery.trim().toLowerCase();
+    if (!normalizedSearch) return restaurants;
+
+    return restaurants.filter(restaurant => {
+      const searchableFields = [
+        restaurant.name,
+        restaurant.cuisine,
+        ...restaurant.tags,
+        ...restaurant.dishes.map(dish => dish.name),
+      ];
+
+      return searchableFields.some(field => field.toLowerCase().includes(normalizedSearch));
+    });
+  }, [searchQuery]);
+
+  const addToCart = restaurant => {
+    setCartItems(prevItems => {
+      const existing = prevItems.find(item => item.id === restaurant.id);
+      if (existing) {
+        return prevItems.map(item =>
+          item.id === restaurant.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+
+      return [
+        ...prevItems,
+        {
+          id: restaurant.id,
+          name: restaurant.name,
+          price: restaurant.dishes[0]?.price ?? '₹0',
+          quantity: 1,
+        },
+      ];
+    });
+  };
+
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + Number(item.price.replace(/[^0-9]/g, '')) * item.quantity,
+    0
+  );
+
+  const cartLabel = totalItems > 0 ? `${totalItems} item${totalItems > 1 ? 's' : ''}` : 'Cart is empty';
+
   return (
     <div className="app-shell">
       <div className="hero-banner">
@@ -78,17 +127,44 @@ function App() {
             <p>Order delicious food from your favorite restaurants.</p>
           </div>
         </div>
-        <div className="search-box">
-          <span className="search-icon">🔍</span>
-          <input type="search" placeholder="Search for restaurants, cuisines or dishes" />
+
+        <div className="hero-actions">
+          <div className="search-box">
+            <span className="search-icon">🔍</span>
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search restaurants, cuisines or dishes"
+            />
+          </div>
+
+          <div className="cart-summary-card">
+            <div className="cart-top">
+              <span className="cart-title">My Cart</span>
+              <span className="cart-count">{cartLabel}</span>
+            </div>
+            <div className="cart-total">{totalItems > 0 ? `Total: ₹${totalPrice}` : 'Add something tasty'}</div>
+          </div>
         </div>
       </div>
 
       <section className="section category-section">
-        <h2>Popular Categories</h2>
+        <div className="section-header">
+          <div>
+            <h2>Popular Categories</h2>
+            <p>Select a category to browse faster.</p>
+          </div>
+        </div>
+
         <div className="category-list">
           {categories.map(category => (
-            <button key={category.id} className="category-card">
+            <button
+              key={category.id}
+              className="category-card"
+              type="button"
+              onClick={() => setSearchQuery(category.name)}
+            >
               <span className="category-emoji">{category.emoji}</span>
               <span>{category.name}</span>
             </button>
@@ -102,11 +178,13 @@ function App() {
             <h2>Featured Restaurants</h2>
             <p>Handpicked restaurants for you.</p>
           </div>
-          <button className="view-all">View All Items</button>
+          <button className="view-all" type="button" onClick={() => setSearchQuery('')}>
+            View All
+          </button>
         </div>
 
         <div className="restaurant-grid">
-          {restaurants.map(restaurant => (
+          {filteredRestaurants.map(restaurant => (
             <article key={restaurant.id} className="restaurant-card">
               <div className="restaurant-card-header">
                 <div>
@@ -115,15 +193,20 @@ function App() {
                 </div>
                 <div className="rating-chip">{restaurant.rating} ★</div>
               </div>
+
               <div className="restaurant-meta">
                 <span>{restaurant.eta}</span>
                 <span>{restaurant.delivery}</span>
               </div>
+
               <div className="restaurant-tags">
                 {restaurant.tags.map(tag => (
-                  <span key={tag} className="tag">{tag}</span>
+                  <span key={tag} className="tag">
+                    {tag}
+                  </span>
                 ))}
               </div>
+
               <div className="menu-preview">
                 {restaurant.dishes.map(dish => (
                   <div key={dish.name} className="dish-row">
@@ -132,9 +215,32 @@ function App() {
                   </div>
                 ))}
               </div>
-              <button className="order-button">Order Now</button>
+
+              <button className="order-button" type="button" onClick={() => addToCart(restaurant)}>
+                Order Now
+              </button>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="section cart-section">
+        <div className="cart-panel">
+          <h2>Your Order</h2>
+          {cartItems.length === 0 ? (
+            <p className="empty-cart">Your cart is empty. Tap Order Now to add a restaurant.</p>
+          ) : (
+            <div className="cart-items-list">
+              {cartItems.map(item => (
+                <div key={item.id} className="cart-item">
+                  <span>{item.name}</span>
+                  <span>
+                    {item.quantity} × {item.price}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>
