@@ -263,7 +263,7 @@
 .order-button {
   margin-top: auto;
   border: none;
-  background: #fb923c;
+  background: #2563eb;
   color: white;
   padding: 14px 18px;
   border-radius: 999px;
@@ -273,7 +273,7 @@
 }
 
 .order-button:hover {
-  background: #f97316;
+  background: #1d4ed8;
   transform: translateY(-1px);
 }
 
